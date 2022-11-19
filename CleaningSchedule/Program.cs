@@ -10,13 +10,24 @@ namespace CleaningSchedule
 	internal class Program
 	{
 		public static void Main(string[] args)
-		{
+
+		{		
 			FlatmatesList listOfflatmates = new FlatmatesList();
+
+			if (listOfflatmates.listOfFlatmates.Count == 0)
+			{
+				Console.WriteLine("VITEJ V PROGRAMU 'CISTE SPOLUBYDLENI'.");
+				listOfflatmates.WriteFirstFlatmates();
+			}
+			else
+			{
+				listOfflatmates.CallFileWithListOFFlatmates();
+				ShowWelcomeAndListOfFlatmates(listOfflatmates);
+			}
+
 			CleaningTaskList listOfTasks = new CleaningTaskList();
 
 			bool runProgram = true;
-
-			ShowWelcomeAndListOfFlatmates(listOfflatmates);
 
 			CleaningSchedule schedule = new CleaningSchedule(GetLengthOfDutyInDays());
 
@@ -70,7 +81,7 @@ namespace CleaningSchedule
 
 		private static void ShowWelcomeAndListOfFlatmates(FlatmatesList listOfflatmates)
 		{
-			Console.WriteLine("VITEJ V MEM PROGRAMU 'CISTE SPOLUBYDLENI'.");
+			Console.WriteLine("VITEJ V PROGRAMU 'CISTE SPOLUBYDLENI'.");
 			Console.WriteLine("\nSOUCASNI SPOLUBYDLICI:");
 			listOfflatmates.WriteListOfNames();
 		}

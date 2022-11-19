@@ -11,17 +11,19 @@ namespace CleaningSchedule
 	public class FlatmatesList
 	{
 		public List<Flatmate> listOfFlatmates { get; private set; } //proc nelze velke pismeno?
+
+		public static int NumberOfFlatmates { get; private set; }
 		public FlatmatesList()
 		{
 			listOfFlatmates = new List<Flatmate>()
 			{
-			//new Flatmate("Ales", "Novotny"),
-			//new Flatmate("Bedrich", "Baudis"),
-			//new Flatmate ("Cyril","Cerny"),
-			//new Flatmate("Borek", "Modry")
+				//new Flatmate("Ales", "Novotny"),
+				//new Flatmate("Bedrich", "Baudis"),
+				//new Flatmate ("Cyril","Cerny"),
+				//new Flatmate("Borek", "Modry")
 			};
 
-			//CallFileWithListOFFlatmates();
+			NumberOfFlatmates = listOfFlatmates.Count();
 		}
 
 		public void CallFileWithListOFFlatmates()
@@ -36,10 +38,9 @@ namespace CleaningSchedule
 				Directory.CreateDirectory(Path.GetDirectoryName(flatmatesFile));
 			}
 
-			if(listOfFlatmates.Count == 0)
+			if (listOfFlatmates.Count == 0)
 			{
-				Console.WriteLine("Nejsou zapsani zadni spolubydlici. Nize zadej jmena a stiskni 'Enter'.");
-				AddAFlatemate();
+				WriteFirstFlatmates();
 			}
 
 			XmlSerializer serializerFlatmates = new XmlSerializer(typeof(List<Flatmate>));
@@ -48,12 +49,11 @@ namespace CleaningSchedule
 			{
 				serializerFlatmates.Serialize(writer, listOfFlatmates);
 			}
-			
+
 			using (StreamReader reader = new StreamReader(flatmatesFile))
 			{
 				Flatmate fl = serializerFlatmates.Deserialize(reader) as Flatmate;
 			}
-
 		}
 
 		public void WriteListOfNames()
@@ -71,6 +71,7 @@ namespace CleaningSchedule
 			Console.Write("Zadej prijmeni: ");
 			string prijmeni = Console.ReadLine();
 			listOfFlatmates.Add(new Flatmate(jmeno, prijmeni));
+			NumberOfFlatmates++;
 			Console.WriteLine("\nAktualizovany seznam spolubydlicich:");
 			WriteListOfNames();
 		}
@@ -82,8 +83,27 @@ namespace CleaningSchedule
 			string surnameToRemove = Console.ReadLine();//pridate case sensitivity & toLower
 			Flatmate flatMateToRemove = listOfFlatmates.Find(f => f.Name == nameToRemove && f.Surname == surnameToRemove);
 			listOfFlatmates.Remove(flatMateToRemove);
+			NumberOfFlatmates--;
 			Console.WriteLine("\nAktualizovany seznam spolubydlicich:");
 			WriteListOfNames();
+		}
+
+		public void WriteFirstFlatmates()
+		{
+			Console.WriteLine("Nejsou zadani zadni spolubydlici. Nize zapis jmena, potvrzuj klavesou 'Enter'.");
+			Console.WriteLine("Pro ukonceni zadavani stiskni 'k'.");
+			char endKey;
+			do
+			{
+				Console.Write("Zadej krestni jmeno: ");
+				string jmeno = Console.ReadLine();
+				Console.Write("Zadej prijmeni: ");
+				string prijmeni = Console.ReadLine();
+				listOfFlatmates.Add(new Flatmate(jmeno, prijmeni));
+				NumberOfFlatmates++;
+				endKey = Console.ReadKey().KeyChar;
+			}
+			while (endKey != 'k');
 		}
 	}
 }
