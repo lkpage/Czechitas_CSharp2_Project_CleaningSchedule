@@ -19,7 +19,7 @@ namespace CleaningSchedule
 			DateToday = DateTime.Now;
 			ThisDutyStart = GetDateOfThisWeekStart();
 			DutyLengthInDays = dutyLengthInDays;
-			NumberOfDutyPeriodsShown = 10;
+			NumberOfDutyPeriodsShown = 5;
 		}
 
 		public void ShowDateTodayAndFlatmateResponsibleForCurrentPeriod()

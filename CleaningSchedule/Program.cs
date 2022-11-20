@@ -35,6 +35,7 @@ namespace CleaningSchedule
 						break;
 					case 's':
 						Console.WriteLine();
+						Console.WriteLine("SMAZANI SPOLUBYDLICI/HO:");
 						listOfflatmates.RemoveAFlatemate();
 						//schedule.ShowLongSchedule();
 						break;
@@ -46,10 +47,12 @@ namespace CleaningSchedule
 						break;
 					case 'n':
 						Console.WriteLine();
+						Console.WriteLine("PRIDANI CINNOSTI:");
 						listOfTasks.AddATask();
 						break;
 					case 'u':
 						Console.WriteLine();
+						Console.WriteLine("SMAZANI CINNOSTI:");
 						listOfTasks.RemoveATask();
 						break;
 					case 'd':
@@ -80,8 +83,7 @@ namespace CleaningSchedule
 			}
 			else
 			{
-				Console.WriteLine("\nSOUCASNI SPOLUBYDLICI:");
-				listOfflatmates.CallFileWithListOFFlatmates();
+				//listOfflatmates.CallFileWithListOFFlatmates();
 				listOfflatmates.ShowListOfNames();
 			}
 		}
@@ -90,10 +92,27 @@ namespace CleaningSchedule
 		{
 			Console.WriteLine("\nZVOL DELKU TRVANI SLUZBY:");
 			Console.WriteLine(" Jak dlouho ma trvat sluzba jedne osoby?");
-			Console.WriteLine(" Vypis pocet dnu (7, 10 nebo 14) a stiskni 'Enter'.");
+			Console.WriteLine(" Vypis pocet dnu (7-14 vcetne) a stiskni 'Enter'.");
 
-			int numberOfDays = int.Parse(Console.ReadLine());
+			int numberOfDays = VerifyNumber();
+
 			return numberOfDays;
+		}
+
+		public static int VerifyNumber()
+		{
+			string input = Console.ReadLine();
+			int number;
+			bool inputIsNumber = int.TryParse(input, out number);
+			bool numberInRange = inputIsNumber && number >= 7 && number <= 14;
+			while (!numberInRange)
+			{
+				Console.WriteLine("Neplatne zadani, zadej pocet mezi 7-14 vcetne:");
+				input = Console.ReadLine();
+				inputIsNumber = int.TryParse(input, out number);
+				numberInRange = inputIsNumber && number >= 7 && number <= 14;
+			}
+			return number;
 		}
 
 		private static void ShowSchedule(CleaningSchedule sched)
