@@ -11,24 +11,13 @@ namespace CleaningSchedule
 	{
 		public static void Main(string[] args)
 
-		{		
-			FlatmatesList listOfflatmates = new FlatmatesList();
-
-			if (listOfflatmates.listOfFlatmates.Count == 0)
-			{
-				Console.WriteLine("VITEJ V PROGRAMU 'CISTE SPOLUBYDLENI'.");
-				listOfflatmates.WriteFirstFlatmates();
-			}
-			else
-			{
-				listOfflatmates.CallFileWithListOFFlatmates();
-				ShowWelcomeAndListOfFlatmates(listOfflatmates);
-			}
-
-			CleaningTaskList listOfTasks = new CleaningTaskList();
-
+		{
 			bool runProgram = true;
 
+			FlatmatesList listOfflatmates = new FlatmatesList();
+			ShowWelcomeAndCreateOrShowListOfFlatmates(listOfflatmates);
+
+			CleaningTaskList listOfTasks = new CleaningTaskList();
 			CleaningSchedule schedule = new CleaningSchedule(GetLengthOfDutyInDays());
 
 			ShowSchedule(schedule);
@@ -42,7 +31,7 @@ namespace CleaningSchedule
 				{
 					case 'v':
 						Console.WriteLine();
-						listOfflatmates.WriteListOfNames();
+						listOfflatmates.ShowListOfNames();
 						break;
 					case 's':
 						Console.WriteLine();
@@ -51,6 +40,7 @@ namespace CleaningSchedule
 						break;
 					case 'p':
 						Console.WriteLine();
+						Console.WriteLine("PRIDANI NOVYCH SPOLUBYDLICICH:");
 						listOfflatmates.AddAFlatemate();
 						//schedule.ShowLongSchedule();
 						break;
@@ -79,19 +69,28 @@ namespace CleaningSchedule
 			Console.ReadLine();
 		}
 
-		private static void ShowWelcomeAndListOfFlatmates(FlatmatesList listOfflatmates)
+		private static void ShowWelcomeAndCreateOrShowListOfFlatmates(FlatmatesList listOfflatmates)
 		{
 			Console.WriteLine("VITEJ V PROGRAMU 'CISTE SPOLUBYDLENI'.");
-			Console.WriteLine("\nSOUCASNI SPOLUBYDLICI:");
-			listOfflatmates.WriteListOfNames();
+
+			if (listOfflatmates.listOfFlatmates.Count == 0)
+			{
+				Console.WriteLine("\nNejsou zadani zadni spolubydlici.");
+				listOfflatmates.AddAFlatemate();
+			}
+			else
+			{
+				Console.WriteLine("\nSOUCASNI SPOLUBYDLICI:");
+				listOfflatmates.CallFileWithListOFFlatmates();
+				listOfflatmates.ShowListOfNames();
+			}
 		}
 
 		private static int GetLengthOfDutyInDays()
 		{
 			Console.WriteLine("\nZVOL DELKU TRVANI SLUZBY:");
 			Console.WriteLine(" Jak dlouho ma trvat sluzba jedne osoby?");
-			Console.WriteLine(" Vypis pocet dnu (7, 10 nebo 14) a stiskni 'enter'.");
-
+			Console.WriteLine(" Vypis pocet dnu (7, 10 nebo 14) a stiskni 'Enter'.");
 
 			int numberOfDays = int.Parse(Console.ReadLine());
 			return numberOfDays;
