@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -92,27 +93,12 @@ namespace CleaningSchedule
 		{
 			Console.WriteLine("\nZVOL DELKU TRVANI SLUZBY:");
 			Console.WriteLine(" Jak dlouho ma trvat sluzba jedne osoby?");
-			Console.WriteLine(" Vypis pocet dnu (7-14 vcetne) a stiskni 'Enter'.");
+			string userInstruction = "Vypis pocet dnu (7 - 14 vcetne) a stiskni 'Enter': ";
+			Console.Write(" " + userInstruction);
 
-			int numberOfDays = VerifyNumber();
+			int numberOfDays = Validations.VerifyNumberWithinRange(7, 14, userInstruction);
 
 			return numberOfDays;
-		}
-
-		public static int VerifyNumber()
-		{
-			string input = Console.ReadLine();
-			int number;
-			bool inputIsNumber = int.TryParse(input, out number);
-			bool numberInRange = inputIsNumber && number >= 7 && number <= 14;
-			while (!numberInRange)
-			{
-				Console.WriteLine("Neplatne zadani, zadej pocet mezi 7-14 vcetne:");
-				input = Console.ReadLine();
-				inputIsNumber = int.TryParse(input, out number);
-				numberInRange = inputIsNumber && number >= 7 && number <= 14;
-			}
-			return number;
 		}
 
 		private static void ShowSchedule(CleaningSchedule sched)
@@ -123,7 +109,6 @@ namespace CleaningSchedule
 
 		private static void ShowListOfTasks(CleaningTaskList listOfTasks)
 		{
-			Console.WriteLine("\nSEZNAM CINNOSTI:");
 			listOfTasks.WriteListOfTasks();
 		}
 

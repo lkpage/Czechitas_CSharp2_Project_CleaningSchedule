@@ -58,6 +58,7 @@ namespace CleaningSchedule
 		//	}
 		//}
 
+		
 		public void AddAFlatemate()
 		{
 			Console.WriteLine(" Lze pridat jednoho ci vice spolubydlicich.");
@@ -67,10 +68,22 @@ namespace CleaningSchedule
 			char endKey;
 			do
 			{
-				Console.Write("Zadej krestni jmeno: ");
+				Console.Write("Zadej jmeno: ");
 				string name = Console.ReadLine();
+				while (!Validations.IsLettersOnly(name))
+				{
+					Console.Write("Zadej jmeno: ");
+					name = Console.ReadLine();
+				}
+
 				Console.Write("Zadej prijmeni: ");
 				string surname = Console.ReadLine();
+				while (!Validations.IsLettersOnly(surname))
+				{
+					Console.Write("Zadej prijmeni: ");
+					surname = Console.ReadLine();
+				}
+
 				if (FlatmateExists(name, surname))
 				{
 					Console.WriteLine("Jmeno uz je v seznamu. Nelze pridat stejne jmeno.");
@@ -79,13 +92,16 @@ namespace CleaningSchedule
 				else
 				{
 					listOfFlatmates.Add(new Flatmate(name, surname));
+					Console.WriteLine("(Pro pridani dalsi osoby stiskni 'Enter'.)");
 					NumberOfFlatmates++;
 					endKey = Console.ReadKey().KeyChar;
 				}
 			}
 			while (endKey != 'k');
+			
 			ShowListOfNames();
 		}
+
 		public void RemoveAFlatemate()
 		{
 			Console.Write("Zadej krestni jmeno: ");
@@ -120,12 +136,6 @@ namespace CleaningSchedule
 				Console.WriteLine($" {f.Name} {f.Surname}");
 			}
 		}
-
-		//public void VerifyInputsForNameAndSurname(string flName, string flSurname)
-		//{	string name = flName;
-		//	string surname = flSurname;
-
-		//}
 
 		public bool FlatmateExists(string flName, string flSurname)
 		{

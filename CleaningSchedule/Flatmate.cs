@@ -12,7 +12,6 @@ namespace CleaningSchedule
 		{
 
 		}
-
 		public Flatmate()
 		{
 
