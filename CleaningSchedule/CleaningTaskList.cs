@@ -11,24 +11,35 @@ namespace CleaningSchedule
 	{
 		public List<CleaningTask> ListOfTasks { get; private set; }
 
+		public static int CleaningTasksCount { get; private set; }
 		public CleaningTaskList()
 		{
 			ListOfTasks = new List<CleaningTask>
 			{
 				new CleaningTask("vytirani podlahy"),
-				new CleaningTask("utirani prachu"),
-				new CleaningTask("myti oken"),
-				new CleaningTask("zametani"),
+				//new CleaningTask("utirani prachu"),
+				//new CleaningTask("myti oken"),
+				//new CleaningTask("zametani"),
 			};
+			CleaningTasksCount = ListOfTasks.Count;
 		}
 
 		public void WriteListOfTasks()
 		{
 			Console.WriteLine("\nSEZNAM CINNOSTI:");
-			foreach (CleaningTask t in ListOfTasks)
+
+			if (CleaningTasksCount == 0)
 			{
-				int taskNumber = ListOfTasks.IndexOf(t) + 1;
-				Console.WriteLine($" ({taskNumber}) {t.TaskName}");
+				Console.WriteLine("Nejsou zadane zadne cinnosti.");
+				AddATask();
+			}
+			else
+			{
+				foreach (CleaningTask t in ListOfTasks)
+				{
+					int taskNumber = ListOfTasks.IndexOf(t) + 1;
+					Console.WriteLine($" ({taskNumber}) {t.TaskName}");
+				}
 			}
 		}
 		public void AddATask()
@@ -50,7 +61,7 @@ namespace CleaningSchedule
 					validInput = false;
 					Console.WriteLine("Neplatny text.");
 					break;
-				}	
+				}
 				else if (TaskNameExists(newTask.TaskName))
 				{
 					Console.WriteLine("Cinnost uz je v seznamu. Nelze pridat stejnou cinnost.");
@@ -59,11 +70,12 @@ namespace CleaningSchedule
 				else
 				{
 					ListOfTasks.Add(newTask);
+					CleaningTasksCount++;
 					endKey = Console.ReadKey().KeyChar;
 				}
 			}
-
 			while (endKey != 'k' || !validInput);
+
 			WriteListOfTasks();
 		}
 
@@ -76,6 +88,7 @@ namespace CleaningSchedule
 
 			CleaningTask taskToRemove = ListOfTasks.Find(t => (ListOfTasks.IndexOf(t) + 1) == indexOfTaskToRemove);
 			ListOfTasks.Remove(taskToRemove);
+			CleaningTasksCount--;
 			WriteListOfTasks();
 		}
 

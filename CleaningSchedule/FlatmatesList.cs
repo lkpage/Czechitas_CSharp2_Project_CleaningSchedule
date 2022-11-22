@@ -14,18 +14,18 @@ namespace CleaningSchedule
 	{
 		public List<Flatmate> listOfFlatmates { get; private set; } //proc nelze velke pismeno?
 
-		public static int NumberOfFlatmates { get; private set; }
+		public static int FlatmatesCount { get; private set; }
 		public FlatmatesList()
 		{
 			listOfFlatmates = new List<Flatmate>()
 			{
-				new Flatmate("Ales", "Novotny"),
-				new Flatmate("Bedrich", "Baudis"),
-				new Flatmate ("Cyril","Cerny"),
+				//new Flatmate("Ales", "Novotny"),
+				//new Flatmate("Bedrich", "Baudis"),
+				//new Flatmate ("Cyril","Cerny"),
 				//new Flatmate("Borek", "Modry")
 			};
 
-			NumberOfFlatmates = listOfFlatmates.Count();
+			FlatmatesCount = listOfFlatmates.Count();
 		}
 
 		//public void CallFileWithListOFFlatmates()
@@ -58,7 +58,7 @@ namespace CleaningSchedule
 		//	}
 		//}
 
-		
+
 		public void AddAFlatemate()
 		{
 			Console.WriteLine(" Lze pridat jednoho ci vice spolubydlicich.");
@@ -92,13 +92,13 @@ namespace CleaningSchedule
 				else
 				{
 					listOfFlatmates.Add(new Flatmate(name, surname));
-					Console.WriteLine("(Pro pridani dalsi osoby stiskni 'Enter'.)");
-					NumberOfFlatmates++;
+					Console.WriteLine(" (Pro pridani dalsi osoby stiskni 'Enter'.)");
+					FlatmatesCount++;
 					endKey = Console.ReadKey().KeyChar;
 				}
 			}
 			while (endKey != 'k');
-			
+
 			ShowListOfNames();
 		}
 
@@ -114,12 +114,17 @@ namespace CleaningSchedule
 			{
 				Console.WriteLine("Jmeno neni v seznamu, nelze smazat.");
 			}
-			listOfFlatmates.Remove(flatMateToRemove);
+			else
+			{
+				listOfFlatmates.Remove(flatMateToRemove);
+				FlatmatesCount--;
+			}
+
 
 			//if (FlatmateExists(name, surname))
 			//{
 			//	listOfFlatmates.Remove(new Flatmate(name, surname));	//toto nefunguje
-			//	NumberOfFlatmates--;
+			//	FlatmatesCount--;
 			//}
 			//else
 			//{
@@ -131,9 +136,21 @@ namespace CleaningSchedule
 		public void ShowListOfNames()
 		{
 			Console.WriteLine("\nSEZNAM SPOLUBYDLICICH:");
-			foreach (Flatmate f in listOfFlatmates)
+			if (FlatmatesCount == 0)
 			{
-				Console.WriteLine($" {f.Name} {f.Surname}");
+				Console.WriteLine("Nejsou zadani zadni spolubydlici.");
+				AddAFlatemate();
+			}
+			else if (FlatmatesCount == 1)
+			{
+				Console.WriteLine($"V seznamu spolubydlicich je pouze jedna osoba: {listOfFlatmates[0].Name} {listOfFlatmates[0].Surname}");
+			}
+			else
+			{
+				foreach (Flatmate f in listOfFlatmates)
+				{
+					Console.WriteLine($" {f.Name} {f.Surname}");
+				}
 			}
 		}
 

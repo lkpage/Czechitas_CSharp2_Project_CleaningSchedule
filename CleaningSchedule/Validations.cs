@@ -82,7 +82,5 @@ namespace CleaningSchedule
 			}
 			return true;
 		}
-
-
 	}
 }

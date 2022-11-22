@@ -35,17 +35,29 @@ namespace CleaningSchedule
 
 		public void ShowLongSchedule()
 		{
-			Console.WriteLine($"Delka sluzby ve dnech: {DutyLengthInDays}");
-			Console.WriteLine("Prvni sluzba zacina nejblizsi pondeli.");
-			DateTime startDate = ThisDutyStart;
-			DateTime endDate;
-			int daysAdded = DutyLengthInDays - 1;
-			List<Flatmate> adjustedList = AdjustListOfFlatmates(NumberOfDutyPeriodsShown);
-			for (int i = 0; i < NumberOfDutyPeriodsShown; i++)
+			Console.WriteLine("\nROZPIS SLUZEB:");
+			if (FmList.listOfFlatmates.Count == 0)
 			{
-				endDate = startDate.AddDays(daysAdded);
-				Console.WriteLine($"{startDate: dd. MM.} - {endDate: dd. MM.} - {adjustedList[i].Name} {adjustedList[i].Surname}");
-				startDate = endDate.AddDays(1);
+				Console.WriteLine("Rozpis nelze zobrazit, seznam spolubydlicich je prazdny.");
+			}
+			else if (FmList.listOfFlatmates.Count == 1)
+			{
+				Console.WriteLine($"V seznamu spolubydlicich je pouze 1 osoba: {FmList.listOfFlatmates[0].Name} {FmList.listOfFlatmates[0].Surname}");
+			}
+			else
+			{
+				Console.WriteLine($"Delka sluzby ve dnech: {DutyLengthInDays}");
+				Console.WriteLine("Prvni sluzba zacina nejblizsi pondeli.");
+				DateTime startDate = ThisDutyStart;
+				DateTime endDate;
+				int daysAdded = DutyLengthInDays - 1;
+				List<Flatmate> adjustedList = AdjustListOfFlatmates(NumberOfDutyPeriodsShown);
+				for (int i = 0; i < NumberOfDutyPeriodsShown; i++)
+				{
+					endDate = startDate.AddDays(daysAdded);
+					Console.WriteLine($"{startDate: dd. MM.} - {endDate: dd. MM.} - {adjustedList[i].Name} {adjustedList[i].Surname}");
+					startDate = endDate.AddDays(1);
+				}
 			}
 		}
 

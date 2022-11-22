@@ -22,6 +22,8 @@ namespace CleaningSchedule
 			ShowSchedule(schedule);
 			
 			CleaningTaskList listOfTasks = new CleaningTaskList();
+
+
 			ShowListOfTasks(listOfTasks);
 			
 			ShowControlMenu();
@@ -39,14 +41,12 @@ namespace CleaningSchedule
 						Console.WriteLine();
 						Console.WriteLine("SMAZANI SPOLUBYDLICI/HO:");
 						listOfflatmates.RemoveAFlatemate();
-						Console.WriteLine("\nAKTUALIZOVANY ROZPIS:");
 						schedule.ShowLongSchedule();
 						break;
 					case 'p':
 						Console.WriteLine();
 						Console.WriteLine("PRIDANI NOVYCH SPOLUBYDLICICH:");
 						listOfflatmates.AddAFlatemate();
-						Console.WriteLine("\nAKTUALIZOVANY ROZPIS:");
 						schedule.ShowLongSchedule();
 						break;
 					case 'n':
@@ -79,18 +79,8 @@ namespace CleaningSchedule
 		private static void ShowWelcomeAndCreateOrShowListOfFlatmates(FlatmatesList listOfflatmates)
 		{
 			Console.WriteLine("VITEJ V PROGRAMU 'CISTE SPOLUBYDLENI'.");
-			Console.WriteLine("Program umoznuje spravovat seznam spolubydlicich, seznam cinnosti a vypisuje rozpis sluzeb na budouci obdobi.");
-
-			if (listOfflatmates.listOfFlatmates.Count == 0)
-			{
-				Console.WriteLine("\nNejsou zadani zadni spolubydlici.");
-				listOfflatmates.AddAFlatemate();
-			}
-			else
-			{
-				//listOfflatmates.CallFileWithListOFFlatmates();
-				listOfflatmates.ShowListOfNames();
-			}
+			Console.WriteLine("Program umoznuje tvorit a spravovat seznam spolubydlicich a cinnosti \na vypisuje rozpis sluzeb na budouci obdobi.");
+			listOfflatmates.ShowListOfNames();
 		}
 
 		private static int GetLengthOfDutyInDays()
