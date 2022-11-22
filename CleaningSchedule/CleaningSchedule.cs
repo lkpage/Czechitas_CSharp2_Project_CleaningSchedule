@@ -7,19 +7,21 @@ using System.Threading.Tasks;
 
 namespace CleaningSchedule
 {
-	public class CleaningSchedule : FlatmatesList
+	public class CleaningSchedule
 	{
 		public DateTime DateToday { get; private set; }
 		public DateTime ThisDutyStart { get; private set; }
 		public int DutyLengthInDays { get; private set; }
 		public int NumberOfDutyPeriodsShown { get; private set; }
+		public FlatmatesList FmList { get; private set; }
 
-		public CleaningSchedule(int dutyLengthInDays) : base()
+		public CleaningSchedule(int dutyLengthInDays, FlatmatesList fmList)
 		{
 			DateToday = DateTime.Now;
 			ThisDutyStart = GetDateOfThisWeekStart();
 			DutyLengthInDays = dutyLengthInDays;
 			NumberOfDutyPeriodsShown = 5;
+			FmList = fmList;
 		}
 
 		public void ShowDateTodayAndFlatmateResponsibleForCurrentPeriod()
@@ -33,8 +35,8 @@ namespace CleaningSchedule
 
 		public void ShowLongSchedule()
 		{
-			Console.WriteLine("\nROZPIS:");
-			Console.WriteLine($"(Delka sluzby ve dnech: {DutyLengthInDays})");
+			Console.WriteLine($"Delka sluzby ve dnech: {DutyLengthInDays}");
+			Console.WriteLine("Prvni sluzba zacina nejblizsi pondeli.");
 			DateTime startDate = ThisDutyStart;
 			DateTime endDate;
 			int daysAdded = DutyLengthInDays - 1;
@@ -49,8 +51,8 @@ namespace CleaningSchedule
 
 		public List<Flatmate> AdjustListOfFlatmates(int NumberOfDutyPeriodsShown)
 		{
-			int adjustedListCount = NumberOfDutyPeriodsShown - listOfFlatmates.Count;
-			List<Flatmate> adjustedList = new List<Flatmate>(listOfFlatmates);
+			int adjustedListCount = NumberOfDutyPeriodsShown - FmList.listOfFlatmates.Count;
+			List<Flatmate> adjustedList = new List<Flatmate>(FmList.listOfFlatmates);
 			for (int i = 0; i < adjustedListCount; i++)
 			{
 				adjustedList.Add(adjustedList[i]);
@@ -67,22 +69,22 @@ namespace CleaningSchedule
 					ThisDutyStart = DateToday;
 					break;
 				case 2:
-					ThisDutyStart = DateToday.AddDays(-1);
+					ThisDutyStart = DateToday.AddDays(+6);
 					break;
 				case 3:
-					ThisDutyStart = DateToday.AddDays(-2);
+					ThisDutyStart = DateToday.AddDays(+5);
 					break;
 				case 4:
-					ThisDutyStart = DateToday.AddDays(-3);
+					ThisDutyStart = DateToday.AddDays(+4);
 					break;
 				case 5:
-					ThisDutyStart = DateToday.AddDays(-4);
+					ThisDutyStart = DateToday.AddDays(+3);
 					break;
 				case 6:
-					ThisDutyStart = DateToday.AddDays(-5);
+					ThisDutyStart = DateToday.AddDays(+2);
 					break;
 				case 0:
-					ThisDutyStart = DateToday.AddDays(-7);
+					ThisDutyStart = DateToday.AddDays(+1);
 					break;
 				default:
 					break;

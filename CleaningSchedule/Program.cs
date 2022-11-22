@@ -18,11 +18,12 @@ namespace CleaningSchedule
 			FlatmatesList listOfflatmates = new FlatmatesList();
 			ShowWelcomeAndCreateOrShowListOfFlatmates(listOfflatmates);
 
-			CleaningTaskList listOfTasks = new CleaningTaskList();
-			CleaningSchedule schedule = new CleaningSchedule(GetLengthOfDutyInDays());
-
+			CleaningSchedule schedule = new CleaningSchedule(GetLengthOfDutyInDays(), listOfflatmates);
 			ShowSchedule(schedule);
+			
+			CleaningTaskList listOfTasks = new CleaningTaskList();
 			ShowListOfTasks(listOfTasks);
+			
 			ShowControlMenu();
 
 			do
@@ -38,13 +39,15 @@ namespace CleaningSchedule
 						Console.WriteLine();
 						Console.WriteLine("SMAZANI SPOLUBYDLICI/HO:");
 						listOfflatmates.RemoveAFlatemate();
-						//schedule.ShowLongSchedule();
+						Console.WriteLine("\nAKTUALIZOVANY ROZPIS:");
+						schedule.ShowLongSchedule();
 						break;
 					case 'p':
 						Console.WriteLine();
 						Console.WriteLine("PRIDANI NOVYCH SPOLUBYDLICICH:");
 						listOfflatmates.AddAFlatemate();
-						//schedule.ShowLongSchedule();
+						Console.WriteLine("\nAKTUALIZOVANY ROZPIS:");
+						schedule.ShowLongSchedule();
 						break;
 					case 'n':
 						Console.WriteLine();
@@ -58,7 +61,7 @@ namespace CleaningSchedule
 						break;
 					case 'd':
 						Console.WriteLine();
-						schedule = new CleaningSchedule(GetLengthOfDutyInDays());
+						schedule = new CleaningSchedule(GetLengthOfDutyInDays(), listOfflatmates);
 						ShowSchedule(schedule);
 						break;
 					case 'x':
@@ -76,6 +79,7 @@ namespace CleaningSchedule
 		private static void ShowWelcomeAndCreateOrShowListOfFlatmates(FlatmatesList listOfflatmates)
 		{
 			Console.WriteLine("VITEJ V PROGRAMU 'CISTE SPOLUBYDLENI'.");
+			Console.WriteLine("Program umoznuje spravovat seznam spolubydlicich, seznam cinnosti a vypisuje rozpis sluzeb na budouci obdobi.");
 
 			if (listOfflatmates.listOfFlatmates.Count == 0)
 			{
@@ -104,6 +108,7 @@ namespace CleaningSchedule
 		private static void ShowSchedule(CleaningSchedule sched)
 		{
 			sched.ShowDateTodayAndFlatmateResponsibleForCurrentPeriod();
+			Console.WriteLine("\nAKTUALNI ROZPIS:");
 			sched.ShowLongSchedule();
 		}
 
