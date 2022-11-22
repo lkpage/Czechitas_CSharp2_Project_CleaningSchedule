@@ -8,8 +8,8 @@ namespace CleaningSchedule
 {
 	public class Person
 	{
-		public string Name { get; set; }
-		public string Surname { get; set; }
+		public string Name { get; private set; }
+		public string Surname { get; private set; }
 
 		public Person(string name, string surname)
 		{
@@ -21,5 +21,7 @@ namespace CleaningSchedule
 		{
 
 		}
+
+
 	}
 }

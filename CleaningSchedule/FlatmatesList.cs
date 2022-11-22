@@ -28,35 +28,35 @@ namespace CleaningSchedule
 			FlatmatesCount = listOfFlatmates.Count();
 		}
 
-		//public void CallFileWithListOFFlatmates()
-		//{
-		//	string flatmatesFile = Path.Combine(
-		//		Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-		//		"CleaningScheduleApp",
-		//		"FlatmatesList.xml");
+		public void CallFileWithListOFFlatmates()
+		{
+			string flatmatesFile = Path.Combine(
+				Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+				"CleaningScheduleApp",
+				"FlatmatesList.txt");
 
-		//	if (!Directory.Exists(Path.GetDirectoryName(flatmatesFile)))
-		//	{
-		//		Directory.CreateDirectory(Path.GetDirectoryName(flatmatesFile));
-		//	}
+			if (!Directory.Exists(Path.GetDirectoryName(flatmatesFile)))
+			{
+				Directory.CreateDirectory(Path.GetDirectoryName(flatmatesFile));
+			}
 
-		//	if (listOfFlatmates.Count == 0)
-		//	{
-		//		AddAFlatemate();
-		//	}
+			List<string> lines = new List<string>();
+			List<Flatmate> newList = new List<Flatmate>();
 
-		//	XmlSerializer serializerFlatmates = new XmlSerializer(typeof(List<Flatmate>));
+			//newList = File.ReadAllLines(flatmatesFile).ToList(List<Flatmate>);
 
-		//	using (StreamWriter writer = new StreamWriter(flatmatesFile))
-		//	{
-		//		serializerFlatmates.Serialize(writer, listOfFlatmates);
-		//	}
+			lines = File.ReadAllLines(flatmatesFile).ToList();
+			foreach (String line in lines)
+			{
+				string[] items = line.Split(' ');
+				Flatmate f = new Flatmate(items[0], items[1]);
+				newList.Add(f);
+				//Console.WriteLine(line);
+			}
 
-		//	using (StreamReader reader = new StreamReader(flatmatesFile))
-		//	{
-		//		Flatmate fl = serializerFlatmates.Deserialize(reader) as Flatmate;
-		//	}
-		//}
+			lines.Add("Neco dalsiho");
+			File.AppendAllLines(flatmatesFile, lines);
+		}
 
 
 		public void AddAFlatemate()
@@ -68,31 +68,17 @@ namespace CleaningSchedule
 			char endKey;
 			do
 			{
-				Console.Write("Zadej jmeno: ");
-				string name = Console.ReadLine();
-				while (!Validations.IsLettersOnly(name))
-				{
-					Console.Write("Zadej jmeno: ");
-					name = Console.ReadLine();
-				}
+				Flatmate flToAdd = GetValidNameAndSurname();
 
-				Console.Write("Zadej prijmeni: ");
-				string surname = Console.ReadLine();
-				while (!Validations.IsLettersOnly(surname))
-				{
-					Console.Write("Zadej prijmeni: ");
-					surname = Console.ReadLine();
-				}
-
-				if (FlatmateExists(name, surname))
+				if (FlatmateExists(flToAdd.Name, flToAdd.Surname))
 				{
 					TextColors.WriteTextInRed("Jmeno uz je v seznamu. Nelze pridat stejne jmeno.");
 					break;
 				}
 				else
 				{
-					listOfFlatmates.Add(new Flatmate(name, surname));
-					Console.WriteLine(" (Pro pridani dalsi osoby stiskni 'Enter'.)");
+					listOfFlatmates.Add(flToAdd);
+					Console.WriteLine(" (Pro pridani dalsi osoby stiskni 'Enter', pro ukonceni 'k'.)");
 					FlatmatesCount++;
 					endKey = Console.ReadKey().KeyChar;
 				}
@@ -104,13 +90,9 @@ namespace CleaningSchedule
 
 		public void RemoveAFlatemate()
 		{
-			Console.Write("Zadej krestni jmeno: ");
-			string name = Console.ReadLine();
-			Console.Write("Zadej prijmeni: ");
-			string surname = Console.ReadLine();
-			Flatmate flToRemove = new Flatmate(name, surname);
-			Flatmate flatMateToRemove = listOfFlatmates.Find(f => f.Name.ToLower() == name.ToLower() && f.Surname.ToLower() == surname.ToLower());
-			if (FlatmateExists(name, surname) == false)
+			Flatmate flToRemove = GetValidNameAndSurname();
+			Flatmate flatMateToRemove = listOfFlatmates.Find(f => f.Name.ToLower() == flToRemove.Name.ToLower() && f.Surname.ToLower() == flToRemove.Surname.ToLower());
+			if (FlatmateExists(flToRemove.Name, flToRemove.Surname) == false)
 			{
 				TextColors.WriteTextInRed("Jmeno neni v seznamu, nelze smazat.");
 			}
@@ -119,7 +101,6 @@ namespace CleaningSchedule
 				listOfFlatmates.Remove(flatMateToRemove);
 				FlatmatesCount--;
 			}
-
 
 			//if (FlatmateExists(name, surname))
 			//{
@@ -159,6 +140,27 @@ namespace CleaningSchedule
 			Flatmate fmSearched = listOfFlatmates.Find(f => f.Name.ToLower() == flName.ToLower() && f.Surname.ToLower() == flSurname.ToLower());
 			//Console.WriteLine(fmSearched != null);
 			return (fmSearched != null);
+		}
+
+		public Flatmate GetValidNameAndSurname()
+		{
+			Console.Write("Zadej jmeno: ");
+			string name = Console.ReadLine();
+			while (!Validations.IsLettersOnly(name))
+			{
+				Console.Write("Zadej jmeno: ");
+				name = Console.ReadLine();
+			}
+
+			Console.Write("Zadej prijmeni: ");
+			string surname = Console.ReadLine();
+			while (!Validations.IsLettersOnly(surname))
+			{
+				Console.Write("Zadej prijmeni: ");
+				surname = Console.ReadLine();
+			}
+
+			return new Flatmate(name, surname);
 		}
 	}
 }

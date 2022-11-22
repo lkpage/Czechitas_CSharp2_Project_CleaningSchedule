@@ -16,6 +16,10 @@ namespace CleaningSchedule
 			bool runProgram = true;
 
 			FlatmatesList listOfflatmates = new FlatmatesList();
+
+
+			//listOfflatmates.CallFileWithListOFFlatmates();
+
 			ShowWelcomeAndCreateOrShowListOfFlatmates(listOfflatmates);
 
 			CleaningSchedule schedule = new CleaningSchedule(GetLengthOfDutyInDays(), listOfflatmates);
@@ -80,7 +84,7 @@ namespace CleaningSchedule
 		private static void ShowWelcomeAndCreateOrShowListOfFlatmates(FlatmatesList listOfflatmates)
 		{
 			TextColors.WriteTextInGreen("VITEJ V PROGRAMU 'CISTE SPOLUBYDLENI'.");
-			Console.WriteLine("Program umoznuje tvorit a spravovat seznam spolubydlicich a cinnosti {Environment.NewLine}a vypisuje rozpis sluzeb na budouci obdobi.");
+			Console.WriteLine($"Program umoznuje tvorit a spravovat seznam spolubydlicich a cinnosti{Environment.NewLine}a vypisuje rozpis sluzeb na budouci obdobi.");
 			listOfflatmates.ShowListOfNames();
 		}
 
