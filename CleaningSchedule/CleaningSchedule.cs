@@ -26,7 +26,7 @@ namespace CleaningSchedule
 
 		public void ShowDateTodayAndFlatmateResponsibleForCurrentPeriod()
 		{
-			Console.WriteLine("\nAKTUALNI OBDOBI:");
+			TextColors.WriteTextInGreen("AKTUALNI OBDOBI:");
 			DateTime thisDutyEndDate = ThisDutyStart.AddDays(DutyLengthInDays - 1);
 			string dayOfWeekToday = DateToday.ToString("dddd", new CultureInfo("cs-CZ"));
 			Console.WriteLine($" Dnes je {dayOfWeekToday}, {DateToday.ToLongDateString()}.");
@@ -35,7 +35,7 @@ namespace CleaningSchedule
 
 		public void ShowLongSchedule()
 		{
-			Console.WriteLine("\nROZPIS SLUZEB:");
+			TextColors.WriteTextInGreen("ROZPIS SLUZEB:");
 			if (FmList.listOfFlatmates.Count == 0)
 			{
 				Console.WriteLine("Rozpis nelze zobrazit, seznam spolubydlicich je prazdny.");

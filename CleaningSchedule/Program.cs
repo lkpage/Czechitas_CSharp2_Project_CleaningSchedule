@@ -39,30 +39,31 @@ namespace CleaningSchedule
 						break;
 					case 's':
 						Console.WriteLine();
-						Console.WriteLine("SMAZANI SPOLUBYDLICI/HO:");
+						TextColors.WriteTextInYellow("SMAZANI SPOLUBYDLICI/HO:");
 						listOfflatmates.RemoveAFlatemate();
 						schedule.ShowLongSchedule();
 						break;
 					case 'p':
 						Console.WriteLine();
-						Console.WriteLine("PRIDANI NOVYCH SPOLUBYDLICICH:");
+						TextColors.WriteTextInYellow("PRIDANI NOVYCH SPOLUBYDLICICH:");
 						listOfflatmates.AddAFlatemate();
 						schedule.ShowLongSchedule();
 						break;
 					case 'n':
 						Console.WriteLine();
-						Console.WriteLine("PRIDANI CINNOSTI:");
+						TextColors.WriteTextInYellow("PRIDANI CINNOSTI:");
 						listOfTasks.AddATask();
 						break;
 					case 'u':
 						Console.WriteLine();
-						Console.WriteLine("SMAZANI CINNOSTI:");
+						TextColors.WriteTextInYellow("SMAZANI CINNOSTI:");
 						listOfTasks.RemoveATask();
 						break;
 					case 'd':
 						Console.WriteLine();
+						TextColors.WriteTextInYellow("ZMENA DELKY SLUZBY:");
 						schedule = new CleaningSchedule(GetLengthOfDutyInDays(), listOfflatmates);
-						ShowSchedule(schedule);
+						schedule.ShowLongSchedule();
 						break;
 					case 'x':
 						runProgram = false;
@@ -78,14 +79,14 @@ namespace CleaningSchedule
 
 		private static void ShowWelcomeAndCreateOrShowListOfFlatmates(FlatmatesList listOfflatmates)
 		{
-			Console.WriteLine("VITEJ V PROGRAMU 'CISTE SPOLUBYDLENI'.");
-			Console.WriteLine("Program umoznuje tvorit a spravovat seznam spolubydlicich a cinnosti \na vypisuje rozpis sluzeb na budouci obdobi.");
+			TextColors.WriteTextInGreen("VITEJ V PROGRAMU 'CISTE SPOLUBYDLENI'.");
+			Console.WriteLine("Program umoznuje tvorit a spravovat seznam spolubydlicich a cinnosti {Environment.NewLine}a vypisuje rozpis sluzeb na budouci obdobi.");
 			listOfflatmates.ShowListOfNames();
 		}
 
 		private static int GetLengthOfDutyInDays()
 		{
-			Console.WriteLine("\nZVOL DELKU TRVANI SLUZBY:");
+			TextColors.WriteTextInGreen("DELKA TRVANI SLUZBY:");
 			Console.WriteLine(" Jak dlouho ma trvat sluzba jedne osoby?");
 			string userInstruction = "Vypis pocet dnu (7 - 14 vcetne) a stiskni 'Enter': ";
 			Console.Write(" " + userInstruction);
@@ -98,7 +99,6 @@ namespace CleaningSchedule
 		private static void ShowSchedule(CleaningSchedule sched)
 		{
 			sched.ShowDateTodayAndFlatmateResponsibleForCurrentPeriod();
-			Console.WriteLine("\nAKTUALNI ROZPIS:");
 			sched.ShowLongSchedule();
 		}
 
@@ -109,15 +109,14 @@ namespace CleaningSchedule
 
 		private static void ShowControlMenu()
 		{
-			Console.WriteLine("\nKLAVESOVE MENU:");
-			Console.WriteLine(" Pridani noveho spolubydliciho - 'p'");
-			Console.WriteLine(" Smazani spolubydliciho - 's'");
-			Console.WriteLine(" Pridani nove cinnosti - 'n'");
-			Console.WriteLine(" Smazani cinnosti - 'u'");
-			Console.WriteLine(" Zmena delky sluzby - 'd'");
-			Console.WriteLine(" Zavreni programu - 'x'");
+			TextColors.WriteTextInGreen("KLAVESOVE MENU:");
+			Console.WriteLine(" Pridani noveho spolubydliciho".PadRight(32) + "'p'");
+			Console.WriteLine(" Smazani spolubydliciho".PadRight(32) + "'s'");
+			Console.WriteLine(" Pridani nove cinnosti".PadRight(32) + "'n'");
+			Console.WriteLine(" Smazani cinnosti".PadRight(32) + "'u'");
+			Console.WriteLine(" Zmena delky sluzby".PadRight(32) + "'d'");
+			Console.WriteLine(" Zavreni programu".PadRight(32) + "'x'");
 			//Console.Clear();
-
 		}
 	}
 }

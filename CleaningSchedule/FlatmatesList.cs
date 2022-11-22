@@ -19,8 +19,8 @@ namespace CleaningSchedule
 		{
 			listOfFlatmates = new List<Flatmate>()
 			{
-				//new Flatmate("Ales", "Novotny"),
-				//new Flatmate("Bedrich", "Baudis"),
+				new Flatmate("Ales", "Novotny"),
+				new Flatmate("Bedrich", "Baudis"),
 				//new Flatmate ("Cyril","Cerny"),
 				//new Flatmate("Borek", "Modry")
 			};
@@ -86,7 +86,7 @@ namespace CleaningSchedule
 
 				if (FlatmateExists(name, surname))
 				{
-					Console.WriteLine("Jmeno uz je v seznamu. Nelze pridat stejne jmeno.");
+					TextColors.WriteTextInRed("Jmeno uz je v seznamu. Nelze pridat stejne jmeno.");
 					break;
 				}
 				else
@@ -112,7 +112,7 @@ namespace CleaningSchedule
 			Flatmate flatMateToRemove = listOfFlatmates.Find(f => f.Name.ToLower() == name.ToLower() && f.Surname.ToLower() == surname.ToLower());
 			if (FlatmateExists(name, surname) == false)
 			{
-				Console.WriteLine("Jmeno neni v seznamu, nelze smazat.");
+				TextColors.WriteTextInRed("Jmeno neni v seznamu, nelze smazat.");
 			}
 			else
 			{
@@ -135,7 +135,7 @@ namespace CleaningSchedule
 
 		public void ShowListOfNames()
 		{
-			Console.WriteLine("\nSEZNAM SPOLUBYDLICICH:");
+			TextColors.WriteTextInGreen("SEZNAM SPOLUBYDLICICH:");
 			if (FlatmatesCount == 0)
 			{
 				Console.WriteLine("Nejsou zadani zadni spolubydlici.");

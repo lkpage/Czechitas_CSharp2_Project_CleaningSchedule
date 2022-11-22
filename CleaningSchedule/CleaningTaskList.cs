@@ -17,7 +17,7 @@ namespace CleaningSchedule
 			ListOfTasks = new List<CleaningTask>
 			{
 				new CleaningTask("vytirani podlahy"),
-				//new CleaningTask("utirani prachu"),
+				new CleaningTask("utirani prachu"),
 				//new CleaningTask("myti oken"),
 				//new CleaningTask("zametani"),
 			};
@@ -26,7 +26,8 @@ namespace CleaningSchedule
 
 		public void WriteListOfTasks()
 		{
-			Console.WriteLine("\nSEZNAM CINNOSTI:");
+			
+			TextColors.WriteTextInGreen("SEZNAM CINNOSTI:");
 
 			if (CleaningTasksCount == 0)
 			{
@@ -59,12 +60,12 @@ namespace CleaningSchedule
 				if (newTask == null || Validations.IsNotEmptyString(newTask.TaskName))
 				{
 					validInput = false;
-					Console.WriteLine("Neplatny text.");
+					TextColors.WriteTextInRed("Neplatny text.");
 					break;
 				}
 				else if (TaskNameExists(newTask.TaskName))
 				{
-					Console.WriteLine("Cinnost uz je v seznamu. Nelze pridat stejnou cinnost.");
+					TextColors.WriteTextInRed("Cinnost uz je v seznamu. Nelze pridat stejnou cinnost.");
 					break;
 				}
 				else

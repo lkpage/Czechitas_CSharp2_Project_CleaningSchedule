@@ -20,7 +20,7 @@ namespace CleaningSchedule
 			bool numberInRange = inputIsNumber && number >= min && number <= max;
 			while (!numberInRange)
 			{
-				Console.WriteLine("Neplatne zadani.");
+				TextColors.WriteTextInRed("Neplatne zadani.");
 				Console.Write(instruction);
 				input = Console.ReadLine();
 				inputIsNumber = int.TryParse(input, out number);
@@ -36,7 +36,7 @@ namespace CleaningSchedule
 
 			if (string.IsNullOrEmpty(input))
 			{
-				Console.WriteLine("Nazadal jsi zadny vstup.");
+				TextColors.WriteTextInRed("Nazadal jsi zadny vstup.");
 				stringIsOk = false;
 			}
 			else
@@ -45,7 +45,7 @@ namespace CleaningSchedule
 				{
 					if (!Char.IsLetter(input[i]))
 					{
-						Console.WriteLine("Neplatne znaky, zadavej pouze pismena.");
+						TextColors.WriteTextInRed("Neplatne znaky, zadavej pouze pismena.");
 						stringIsOk = false;
 						break;
 					}
@@ -65,7 +65,7 @@ namespace CleaningSchedule
 			int number;
 			while (!int.TryParse(input, out number))
 			{
-				Console.WriteLine("Nezadal jsi cislo, zkus to znovu: ");
+				TextColors.WriteTextInRed("Nezadal jsi cislo, zkus to znovu: ");
 				input = Console.ReadLine();
 			}
 			return number;
@@ -77,7 +77,7 @@ namespace CleaningSchedule
 			int number;
 			while (!int.TryParse(input, out number))
 			{
-				Console.WriteLine("Nezadal jsi cislo, zkus to znovu: ");
+				TextColors.WriteTextInRed("Nezadal jsi cislo, zkus to znovu: ");
 				input = Console.ReadLine();
 			}
 			return true;
