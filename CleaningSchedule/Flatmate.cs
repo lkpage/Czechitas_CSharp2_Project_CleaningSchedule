@@ -17,6 +17,9 @@ namespace CleaningSchedule
 
 		}
 
-
+		public override string ToString()
+		{
+			return $"{Name} {Surname}";	
+		}
 	}
 }

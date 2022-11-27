@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CleaningSchedule
 {
@@ -16,58 +10,57 @@ namespace CleaningSchedule
 			bool runProgram = true;
 
 			FlatmatesList listOfflatmates = new FlatmatesList();
-
-
-			//listOfflatmates.CallFileWithListOFFlatmates();
-
 			ShowWelcomeAndCreateOrShowListOfFlatmates(listOfflatmates);
 
 			CleaningSchedule schedule = new CleaningSchedule(GetLengthOfDutyInDays(), listOfflatmates);
 			ShowSchedule(schedule);
-			
+
 			CleaningTaskList listOfTasks = new CleaningTaskList();
-
-
 			ShowListOfTasks(listOfTasks);
-			
+
 			ShowControlMenu();
 
 			do
 			{
 				char option = Console.ReadKey().KeyChar;
+				string showMenu = "Pro zobrazeni klavesoveho menu stiskni 'm'.";
 				switch (option)
 				{
-					case 'v':
+					case 'p':
 						Console.WriteLine();
-						listOfflatmates.ShowListOfNames();
+						TextProperties.WriteTextInYellowWithEmptyLineAbove("PRIDANI NOVYCH SPOLUBYDLICICH...");
+						listOfflatmates.AddAFlatemate();
+						schedule.ShowLongSchedule();
+						TextProperties.WriteTextInGreenWithEmptyLineAbove(showMenu);
 						break;
 					case 's':
 						Console.WriteLine();
-						TextColors.WriteTextInYellow("SMAZANI SPOLUBYDLICI/HO:");
+						TextProperties.WriteTextInYellowWithEmptyLineAbove("SMAZANI SPOLUBYDLICI/HO...");
 						listOfflatmates.RemoveAFlatemate();
 						schedule.ShowLongSchedule();
-						break;
-					case 'p':
-						Console.WriteLine();
-						TextColors.WriteTextInYellow("PRIDANI NOVYCH SPOLUBYDLICICH:");
-						listOfflatmates.AddAFlatemate();
-						schedule.ShowLongSchedule();
+						TextProperties.WriteTextInGreenWithEmptyLineAbove(showMenu);
 						break;
 					case 'n':
 						Console.WriteLine();
-						TextColors.WriteTextInYellow("PRIDANI CINNOSTI:");
+						TextProperties.WriteTextInYellowWithEmptyLineAbove("AKTUALNI SEZNAM A PRIDANI NOVE CINNOSTI...");
 						listOfTasks.AddATask();
+						TextProperties.WriteTextInGreenWithEmptyLineAbove(showMenu);
 						break;
 					case 'u':
 						Console.WriteLine();
-						TextColors.WriteTextInYellow("SMAZANI CINNOSTI:");
+						TextProperties.WriteTextInYellowWithEmptyLineAbove("AKTUALNI SEZNAM A SMAZANI CINNOSTI...");
 						listOfTasks.RemoveATask();
+						TextProperties.WriteTextInGreenWithEmptyLineAbove(showMenu);
 						break;
 					case 'd':
 						Console.WriteLine();
-						TextColors.WriteTextInYellow("ZMENA DELKY SLUZBY:");
 						schedule = new CleaningSchedule(GetLengthOfDutyInDays(), listOfflatmates);
 						schedule.ShowLongSchedule();
+						TextProperties.WriteTextInGreenWithEmptyLineAbove(showMenu);
+						break;
+					case 'm':
+						Console.WriteLine();
+						ShowControlMenu();
 						break;
 					case 'x':
 						runProgram = false;
@@ -83,14 +76,14 @@ namespace CleaningSchedule
 
 		private static void ShowWelcomeAndCreateOrShowListOfFlatmates(FlatmatesList listOfflatmates)
 		{
-			TextColors.WriteTextInGreen("VITEJ V PROGRAMU 'CISTE SPOLUBYDLENI'.");
+			TextProperties.WriteTextInGreenWithEmptyLineAbove("VITEJ V PROGRAMU 'CISTE SPOLUBYDLENI'.");
 			Console.WriteLine($"Program umoznuje tvorit a spravovat seznam spolubydlicich a cinnosti{Environment.NewLine}a vypisuje rozpis sluzeb na budouci obdobi.");
-			listOfflatmates.ShowListOfNames();
+			listOfflatmates.ShowListOfFlatmates();
 		}
 
 		private static int GetLengthOfDutyInDays()
 		{
-			TextColors.WriteTextInGreen("DELKA TRVANI SLUZBY:");
+			TextProperties.WriteTextInGreenWithEmptyLineAbove("DELKA TRVANI SLUZBY:");
 			Console.WriteLine(" Jak dlouho ma trvat sluzba jedne osoby?");
 			string userInstruction = "Vypis pocet dnu (7 - 14 vcetne) a stiskni 'Enter': ";
 			Console.Write(" " + userInstruction);
@@ -113,7 +106,7 @@ namespace CleaningSchedule
 
 		private static void ShowControlMenu()
 		{
-			TextColors.WriteTextInGreen("KLAVESOVE MENU:");
+			TextProperties.WriteTextInGreenWithEmptyLineAbove("KLAVESOVE MENU:");
 			Console.WriteLine(" Pridani noveho spolubydliciho".PadRight(32) + "'p'");
 			Console.WriteLine(" Smazani spolubydliciho".PadRight(32) + "'s'");
 			Console.WriteLine(" Pridani nove cinnosti".PadRight(32) + "'n'");

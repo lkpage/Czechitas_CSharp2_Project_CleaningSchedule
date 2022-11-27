@@ -1,24 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CleaningSchedule
 {
-	static class TextColors
+	static class TextProperties
 	{
-		public static void WriteTextInGreen(string text)
+		public static void WriteTextInGreenWithEmptyLineAbove(string text)
 		{
 			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine($"{Environment.NewLine}{text}");
 			Console.ForegroundColor = ConsoleColor.White;
 		}
 
-		public static void WriteTextInYellow(string text)
+		public static void WriteTextInYellowWithEmptyLineAbove(string text)
 		{
 			Console.ForegroundColor = ConsoleColor.DarkYellow;
 			Console.WriteLine($"{Environment.NewLine}{text}");
+			Console.ForegroundColor = ConsoleColor.White;
+		}
+		 
+		public static void WriteTextInYellow(string text)
+		{
+			Console.ForegroundColor = ConsoleColor.DarkYellow;
+			Console.WriteLine($"{text}");
 			Console.ForegroundColor = ConsoleColor.White;
 		}
 

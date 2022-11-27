@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CleaningSchedule
 {
@@ -20,13 +17,13 @@ namespace CleaningSchedule
 			DateToday = DateTime.Now;
 			ThisDutyStart = GetDateOfThisWeekStart();
 			DutyLengthInDays = dutyLengthInDays;
-			NumberOfDutyPeriodsShown = 5;
+			NumberOfDutyPeriodsShown = 8;
 			FmList = fmList;
 		}
 
 		public void ShowDateTodayAndFlatmateResponsibleForCurrentPeriod()
 		{
-			TextColors.WriteTextInGreen("AKTUALNI OBDOBI:");
+			TextProperties.WriteTextInGreenWithEmptyLineAbove("AKTUALNI OBDOBI:");
 			DateTime thisDutyEndDate = ThisDutyStart.AddDays(DutyLengthInDays - 1);
 			string dayOfWeekToday = DateToday.ToString("dddd", new CultureInfo("cs-CZ"));
 			Console.WriteLine($" Dnes je {dayOfWeekToday}, {DateToday.ToLongDateString()}.");
@@ -35,14 +32,14 @@ namespace CleaningSchedule
 
 		public void ShowLongSchedule()
 		{
-			TextColors.WriteTextInGreen("ROZPIS SLUZEB:");
-			if (FmList.listOfFlatmates.Count == 0)
+			TextProperties.WriteTextInGreenWithEmptyLineAbove("ROZPIS SLUZEB:");
+			if (FmList.ListOfFlatmates.Count == 0)
 			{
 				Console.WriteLine("Rozpis nelze zobrazit, seznam spolubydlicich je prazdny.");
 			}
-			else if (FmList.listOfFlatmates.Count == 1)
+			else if (FmList.ListOfFlatmates.Count == 1)
 			{
-				Console.WriteLine($"V seznamu spolubydlicich je pouze 1 osoba: {FmList.listOfFlatmates[0].Name} {FmList.listOfFlatmates[0].Surname}");
+				Console.WriteLine($"V seznamu spolubydlicich je pouze 1 osoba: {FmList.ListOfFlatmates[0].Name} {FmList.ListOfFlatmates[0].Surname}");
 			}
 			else
 			{
@@ -63,8 +60,8 @@ namespace CleaningSchedule
 
 		public List<Flatmate> AdjustListOfFlatmates(int NumberOfDutyPeriodsShown)
 		{
-			int adjustedListCount = NumberOfDutyPeriodsShown - FmList.listOfFlatmates.Count;
-			List<Flatmate> adjustedList = new List<Flatmate>(FmList.listOfFlatmates);
+			int adjustedListCount = NumberOfDutyPeriodsShown - FmList.ListOfFlatmates.Count;
+			List<Flatmate> adjustedList = new List<Flatmate>(FmList.ListOfFlatmates);
 			for (int i = 0; i < adjustedListCount; i++)
 			{
 				adjustedList.Add(adjustedList[i]);

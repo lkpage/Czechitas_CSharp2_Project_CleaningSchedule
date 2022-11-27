@@ -1,15 +1,11 @@
-﻿using Microsoft.SqlServer.Server;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System;
+using System.IO;
 
 namespace CleaningSchedule
 {
 	static class Validations
 	{
+
 		public static int VerifyNumberWithinRange(int minimum, int maximum, string instruction)
 		{
 			int min = minimum;
@@ -20,7 +16,7 @@ namespace CleaningSchedule
 			bool numberInRange = inputIsNumber && number >= min && number <= max;
 			while (!numberInRange)
 			{
-				TextColors.WriteTextInRed("Neplatne zadani.");
+				TextProperties.WriteTextInRed("Neplatne zadani.");
 				Console.Write(instruction);
 				input = Console.ReadLine();
 				inputIsNumber = int.TryParse(input, out number);
@@ -36,7 +32,7 @@ namespace CleaningSchedule
 
 			if (string.IsNullOrEmpty(input))
 			{
-				TextColors.WriteTextInRed("Nazadal jsi zadny vstup.");
+				TextProperties.WriteTextInRed("Nazadal jsi zadny vstup.");
 				stringIsOk = false;
 			}
 			else
@@ -45,7 +41,7 @@ namespace CleaningSchedule
 				{
 					if (!Char.IsLetter(input[i]))
 					{
-						TextColors.WriteTextInRed("Neplatne znaky, zadavej pouze pismena.");
+						TextProperties.WriteTextInRed("Neplatne znaky, zadavej pouze pismena.");
 						stringIsOk = false;
 						break;
 					}
@@ -65,7 +61,7 @@ namespace CleaningSchedule
 			int number;
 			while (!int.TryParse(input, out number))
 			{
-				TextColors.WriteTextInRed("Nezadal jsi cislo, zkus to znovu: ");
+				TextProperties.WriteTextInRed("Nezadal jsi cislo, zkus to znovu: ");
 				input = Console.ReadLine();
 			}
 			return number;
@@ -77,7 +73,7 @@ namespace CleaningSchedule
 			int number;
 			while (!int.TryParse(input, out number))
 			{
-				TextColors.WriteTextInRed("Nezadal jsi cislo, zkus to znovu: ");
+				TextProperties.WriteTextInRed("Nezadal jsi cislo, zkus to znovu: ");
 				input = Console.ReadLine();
 			}
 			return true;
